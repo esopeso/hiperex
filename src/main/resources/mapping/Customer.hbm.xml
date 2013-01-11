@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.jboss.org/dtd/hibernate/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 20, 2012 5:21:37 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="fi.muni.redhat.hiperex.model.Customer" table="customer" catalog="data">
+        <id name="customerId" type="int">
+            <column name="customer_id" />
+            <generator class="identity" />
+        </id>
+        <property name="firstName" type="string">
+            <column name="first_name" length="25" />
+        </property>
+        <property name="lastName" type="string">
+            <column name="last_name" length="25" />
+        </property>
+        <property name="birthDate" type="date">
+            <column name="birth_date" length="10" />
+        </property>
+        <property name="phoneNumber" type="string">
+            <column name="phone_number" length="10" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <set name="customerOrders" table="customer_order" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="customer_id" />
+            </key>
+            <one-to-many class="fi.muni.redhat.hiperex.model.CustomerOrder" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.jboss.org/dtd/hibernate/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 20, 2012 5:21:37 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="fi.muni.redhat.hiperex.model.CustomerOrder" table="customer_order" catalog="data">
+        <id name="orderId" type="int">
+            <column name="order_id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="customer" class="fi.muni.redhat.hiperex.model.Customer" fetch="select">
+            <column name="customer_id" />
+        </many-to-one>
+        <set name="itemLists" table="item_list" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="order_id" not-null="true" />
+            </key>
+            <one-to-many class="fi.muni.redhat.hiperex.model.ItemList" />
+        </set>
+    </class>
+</hibernate-mapping>

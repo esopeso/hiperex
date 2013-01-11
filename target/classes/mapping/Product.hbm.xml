@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.jboss.org/dtd/hibernate/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 20, 2012 5:21:37 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="fi.muni.redhat.hiperex.model.Product" table="product" catalog="data">
+        <id name="productId" type="int">
+            <column name="product_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="50" />
+        </property>
+        <set name="itemLists" table="item_list" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_id" not-null="true" />
+            </key>
+            <one-to-many class="fi.muni.redhat.hiperex.model.ItemList" />
+        </set>
+    </class>
+</hibernate-mapping>
