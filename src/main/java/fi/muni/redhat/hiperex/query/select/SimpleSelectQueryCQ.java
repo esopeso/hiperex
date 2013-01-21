@@ -1,4 +1,4 @@
-package fi.muni.redhat.hiperex.query;
+package fi.muni.redhat.hiperex.query.select;
 
 
 import fi.muni.redhat.hiperex.timer.StopWatch;
@@ -8,12 +8,14 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import fi.muni.redhat.hiperex.model.Customer;
+import fi.muni.redhat.hiperex.query.HibernateQuery;
 import fi.muni.redhat.hiperex.service.SessionFactoryProvider;
 import fi.muni.redhat.hiperex.util.Repeatable;
 
 public class SimpleSelectQueryCQ extends HibernateQuery implements Repeatable{
 	
 	private static Logger log = Logger.getLogger(SimpleSelectQueryCQ.class);
+	private StopWatch timer = new StopWatch();
 	
 	public SimpleSelectQueryCQ(SessionFactoryProvider factoryProvider) {
 		super(factoryProvider);
@@ -23,7 +25,6 @@ public class SimpleSelectQueryCQ extends HibernateQuery implements Repeatable{
 	public long repeat() {
 		try {
 			long time = 0;
-			StopWatch timer = new StopWatch();
 			timer.start();
 			Session session = sessionFactory.getCurrentSession();
 			session.beginTransaction();

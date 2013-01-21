@@ -5,28 +5,36 @@
 
 <hibernate-configuration>
 	<session-factory>
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.provider_class">com.jolbox.bonecp.provider.BoneCPConnectionProvider</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/data</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">netreba</property>
 		<property name="hibernate.connection.pool_size">10</property>
-		
+
 		<property name="hibernate.cache.use_query_cache">false</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
-		
-		
+
+
 		<property name="show_sql">false</property>
-		<property name="format_sql">true</property>
+		<property name="format_sql">false</property>
 		<property name="use_sql_comments">false</property>
-		
+
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 		<property name="hibernate.generate_statistics">false</property>
-		
-		<mapping resource="mapping/Customer.hbm.xml"/>
-		<mapping resource="mapping/CustomerOrder.hbm.xml"/>
-		<mapping resource="mapping/ItemList.hbm.xml"/>
-		<mapping resource="mapping/Product.hbm.xml"/>
+
+		<property name="bonecp.idleMaxAgeInMinutes">1</property>
+		<property name="bonecp.idleConnectionTestPeriodInMinutes">1</property>
+		<property name="bonecp.partitionCount">1</property>
+		<property name="bonecp.acquireIncrement">10</property>
+		<property name="bonecp.maxConnectionsPerPartition">60</property>
+		<property name="bonecp.minConnectionsPerPartition">20</property>
+		<property name="bonecp.statementsCacheSize">0</property>
+
+		<mapping resource="mapping/Customer.hbm.xml" />
+		<mapping resource="mapping/CustomerOrder.hbm.xml" />
+		<mapping resource="mapping/ItemList.hbm.xml" />
+		<mapping resource="mapping/Product.hbm.xml" />
 
 	</session-factory>
 </hibernate-configuration>

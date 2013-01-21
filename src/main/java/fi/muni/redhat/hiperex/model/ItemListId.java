@@ -7,6 +7,10 @@ package fi.muni.redhat.hiperex.model;
  */
 public class ItemListId implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2225145224987163574L;
 	private int orderId;
 	private int productId;
 

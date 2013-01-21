@@ -23,7 +23,7 @@ public class XYChartProcessor {
 	public void produceChart(String fileName, String title) throws IOException {
 		JFreeChart chart = 
 				ChartFactory.createXYLineChart
-				(title, "X", "Y", dataSet,  PlotOrientation.VERTICAL, false, false, false);
+				(title, "X", "Y", dataSet,  PlotOrientation.VERTICAL, true, false, false);
 		
 		ChartUtilities.saveChartAsJPEG(new File(fileName), chart, 800, 600);
 		log.info("Chart "+fileName+" created.");

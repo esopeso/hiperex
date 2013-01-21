@@ -7,6 +7,7 @@ public class AvgDataProducer {
 	private static Logger log = Logger.getLogger(AvgDataProducer.class);
 
 	public double cycle(int n, Repeatable query) {
+		log.info("Starting cycle loop: "+query.getClass());
 		long time = 0;
 		for (int i=1; i<n+1; i++) {
 			 time = time + query.repeat();

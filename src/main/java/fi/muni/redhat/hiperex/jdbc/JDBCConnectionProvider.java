@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import fi.muni.redhat.hiperex.exception.NotUniqueIdException;
 import fi.muni.redhat.hiperex.model.Customer;
 
-public class JDBCConnection {
+public class JDBCConnectionProvider {
 
 	public Connection getJDBCConection() {
 		Connection connection = null;

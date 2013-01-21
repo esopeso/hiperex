@@ -10,9 +10,13 @@ import java.util.Set;
  */
 public class CustomerOrder implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3675360115741828610L;
 	private int orderId;
 	private Customer customer;
-	private Set itemLists = new HashSet(0);
+	private Set<ItemList> itemLists = new HashSet<ItemList>();
 
 	public CustomerOrder() {
 	}
@@ -21,7 +25,7 @@ public class CustomerOrder implements java.io.Serializable {
 		this.orderId = orderId;
 	}
 
-	public CustomerOrder(int orderId, Customer customer, Set itemLists) {
+	public CustomerOrder(int orderId, Customer customer, Set<ItemList> itemLists) {
 		this.orderId = orderId;
 		this.customer = customer;
 		this.itemLists = itemLists;
@@ -43,11 +47,11 @@ public class CustomerOrder implements java.io.Serializable {
 		this.customer = customer;
 	}
 
-	public Set getItemLists() {
+	public Set<ItemList> getItemLists() {
 		return this.itemLists;
 	}
 
-	public void setItemLists(Set itemLists) {
+	public void setItemLists(Set<ItemList> itemLists) {
 		this.itemLists = itemLists;
 	}
 

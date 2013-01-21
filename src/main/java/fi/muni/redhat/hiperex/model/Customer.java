@@ -3,7 +3,6 @@ package fi.muni.redhat.hiperex.model;
 // Generated Dec 25, 2012 6:01:06 PM by Hibernate Tools 4.0.0
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
