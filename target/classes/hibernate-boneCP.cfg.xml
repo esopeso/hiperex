@@ -26,9 +26,9 @@
 		<property name="bonecp.idleMaxAgeInMinutes">1</property>
 		<property name="bonecp.idleConnectionTestPeriodInMinutes">1</property>
 		<property name="bonecp.partitionCount">1</property>
-		<property name="bonecp.acquireIncrement">10</property>
-		<property name="bonecp.maxConnectionsPerPartition">60</property>
-		<property name="bonecp.minConnectionsPerPartition">20</property>
+		<property name="bonecp.acquireIncrement">1</property>
+		<property name="bonecp.maxConnectionsPerPartition">10</property>
+		<property name="bonecp.minConnectionsPerPartition">5</property>
 		<property name="bonecp.statementsCacheSize">0</property>
 
 		<mapping resource="mapping/Customer.hbm.xml" />

@@ -1,4 +1,4 @@
-package fi.muni.redhat.hiperex.util;
+package fi.muni.redhat.hiperex.util.old;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +13,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class XYChartProcessor {
 	
-	private int xResolution = 800;
-	private int yResolution = 600;
-	
 	private static Logger log = Logger.getLogger(XYChartProcessor.class);
 	private XYSeriesCollection dataSet = new XYSeriesCollection();
 	
@@ -28,14 +25,9 @@ public class XYChartProcessor {
 				ChartFactory.createXYLineChart
 				(title, "n", "Time (ms)", dataSet,  PlotOrientation.VERTICAL, true, false, false);
 		
-		ChartUtilities.saveChartAsJPEG(new File(fileName), chart, xResolution, yResolution);
+		ChartUtilities.saveChartAsJPEG(new File(fileName), chart, 800, 600);
 		log.info("Chart "+fileName+" created.");
 		dataSet.removeAllSeries(); // clean dataSet for next usage
-	}
-	
-	public void setResolution(int x, int y) {
-		this.xResolution = x;
-		this.yResolution = y;
 	}
 
 }

@@ -1,4 +1,4 @@
-package fi.muni.redhat.hiperex.util;
+package fi.muni.redhat.hiperex.util.old;
 
 import org.jfree.data.xy.XYSeries;
 
@@ -9,7 +9,7 @@ public class XYDataProducer {
 		XYSeries series = new XYSeries(key);
 		double y =0;
 		for (int i=1; i<n+1; i++) {
-			y=repeatable.execute().get("overall");
+			y=repeatable.execute();
 			series.add(i, y);
 		}
 		return series;

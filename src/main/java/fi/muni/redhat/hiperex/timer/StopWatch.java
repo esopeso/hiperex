@@ -1,5 +1,10 @@
 package fi.muni.redhat.hiperex.timer;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 public class StopWatch {
 
 	// running states
@@ -21,7 +26,16 @@ public class StopWatch {
 	 * The stop time.
 	 */
 	private long stopTime = -1;
-
+	
+	/**
+	 * Represents last measured lap time
+	 */
+	private long lastLapTime = -1;
+	
+	/**
+	 * Holds separate lap times
+	 */
+	private HashMap<String, Long> lapTimeList = new HashMap<String, Long>();
 	/**
 	 * <p>
 	 * Start the stopwatch.
@@ -64,6 +78,7 @@ public class StopWatch {
 		}
 		if (this.runningState == STATE_RUNNING) {
 			this.stopTime = System.nanoTime();
+			this.lapTimeList.put("overall", this.stopTime - this.startTime);
 		}
 		this.runningState = STATE_STOPED;
 	}
@@ -104,6 +119,33 @@ public class StopWatch {
 		this.runningState = STATE_UNSTARTED;
 		this.startTime = -1;
 		this.stopTime = -1;
+		this.lastLapTime = -1;
+		this.lapTimeList = new HashMap<String, Long>();
+	}
+	
+	/**
+	 * <p>
+	 * Stores lap time with specified key into map
+	 * <p>
+	 * @param key
+	 */
+	public void lap(String key) {
+		if (this.runningState != STATE_RUNNING) {
+			throw new IllegalStateException("Stopwatch must be running to measure lap time. ");
+		}
+		if (this.lapTimeList.size() == 0) {
+			this.lastLapTime = this.startTime;
+		}
+		long lapTime = System.nanoTime();
+		this.lapTimeList.put(key, lapTime - this.lastLapTime);
+		this.lastLapTime = lapTime;
+	}
+	
+	/**
+	 * @return lapTimeList
+	 */
+	public HashMap<String, Long> getLapTimeList() {
+		return this.lapTimeList;
 	}
 
 }

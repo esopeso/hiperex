@@ -7,10 +7,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.jolbox.bonecp.BoneCP;
+import com.jolbox.bonecp.BoneCPConfig;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import fi.muni.redhat.hiperex.exception.NotUniqueIdException;
 import fi.muni.redhat.hiperex.model.Customer;
 
 public class JDBCConnectionProvider {
+
+	private BoneCP bonePool = null;
+	private ComboPooledDataSource c3P0Pool = null;
+
+	public JDBCConnectionProvider() {
+		createBoneCP();
+		createC3p0Pool();
+	}
 
 	public Connection getJDBCConection() {
 		Connection connection = null;
@@ -25,13 +37,73 @@ public class JDBCConnectionProvider {
 		// System.out.println("JDBC driver registered");
 
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/data", "root", "netreba");
+			connection = DriverManager.getConnection(
+					"jdbc:mysql://localhost:3306/data", "root", "netreba");
 		} catch (SQLException ex) {
 			System.out.println("Connection to database failed");
 			ex.printStackTrace();
 			return connection;
 		}
 		return connection;
+	}
+
+	public void createBoneCP() {
+		BoneCP connectionPool = null;
+		try {
+			// load the database driver (make sure this is in your classpath!)
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (Exception e) {
+			System.out.println("MYSQL driver class not found");
+			e.printStackTrace();
+		}
+
+		try {
+			// setup the connection pool
+			BoneCPConfig config = new BoneCPConfig();
+			config.setJdbcUrl("jdbc:mysql://localhost:3306/data");
+			config.setUsername("root");
+			config.setPassword("netreba");
+			config.setMinConnectionsPerPartition(5);
+			config.setMaxConnectionsPerPartition(10);
+			config.setPartitionCount(1);
+			config.setStatementsCacheSize(0);
+			config.setAcquireIncrement(1);
+			connectionPool = new BoneCP(config); // setup the connection pool
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.bonePool = connectionPool;
+	}
+
+	public Connection getBoneConnection() {
+		try {
+			return this.bonePool.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void createC3p0Pool() {
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		try {
+		cpds.setDriverClass("com.mysql.jdbc.Driver");
+		cpds.setJdbcUrl("jdbc:mysql://localhost:3306/data");
+		cpds.setUser("root");
+		cpds.setPassword("netreba");
+		cpds.setMinPoolSize(1);
+		cpds.setMaxPoolSize(100);
+		cpds.setMaxIdleTime(0);
+		cpds.setMaxStatements(0);
+		} catch (Exception e) {
+			System.out.println("C3P0 create pool exception");
+			e.printStackTrace();
+		}
+		this.c3P0Pool = cpds;
+	}
+	
+	public Connection getC3P0Connection() throws SQLException {
+		return this.c3P0Pool.getConnection();
 	}
 
 	public void testConnection() {
@@ -50,7 +122,8 @@ public class JDBCConnectionProvider {
 		}
 	}
 
-	public Customer getLazyCustomerByID(int id) throws NotUniqueIdException, SQLException {
+	public Customer getLazyCustomerByID(int id) throws NotUniqueIdException,
+			SQLException {
 		int i = 0;
 		Customer customer = new Customer();
 		ResultSet rs;
@@ -75,10 +148,10 @@ public class JDBCConnectionProvider {
 		connection.close();
 		return customer;
 	}
-	
+
 	public void insertCustomer(Customer customer) throws SQLException {
 		String query = "INSERT INTO customer(first_name,last_name,birth_date,phone_number,address) VALUES(?,?,?,?,?)";
-		
+
 		Connection connection = getJDBCConection();
 		PreparedStatement ps = connection.prepareStatement(query);
 		ps.setString(1, customer.getFirstName());

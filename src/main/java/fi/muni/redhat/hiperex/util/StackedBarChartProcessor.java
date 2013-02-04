@@ -15,22 +15,17 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class AvgBarChartProcessor {
+public class StackedBarChartProcessor {
 	
 	private int xResolution = 800;
 	private int yResolution = 600;
-	
-	private static Logger log = Logger.getLogger(AvgBarChartProcessor.class);
-	private DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-	
-	public void addValue(Double value, String category, String serie) {
-		dataSet.addValue(value, category, serie);
-	}
 
-	public void produceChart(String fileName, String title) throws IOException {		
+	private static Logger log = Logger.getLogger(GroupedStackedBarChartProcessor.class);
+	private DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+	
+	public void produceChart(String fileName, String title) throws IOException {
 		JFreeChart chart = 
-				ChartFactory.createBarChart
-				(title, "Query", "Time (ms)", dataSet, PlotOrientation.VERTICAL, true, false, false);
+				ChartFactory.createStackedBarChart(title, "Query type", "Time (ms)", dataset, PlotOrientation.VERTICAL, true, false, false);
 		
 		CategoryPlot plot = chart.getCategoryPlot();
 		CategoryItemRenderer renderer = plot.getRenderer();
@@ -40,7 +35,16 @@ public class AvgBarChartProcessor {
 		
 		ChartUtilities.saveChartAsJPEG(new File(fileName), chart, 800, 600);
 		log.info("Chart "+fileName+" created.");
-		dataSet.clear(); // clean dataSet for next usage
+		resetDataSet();
+		
+	}
+	
+	public void addValue(Double time, String category, String series) {
+			dataset.addValue(time, category, series);
+	}
+	
+	public void resetDataSet() {
+		dataset.clear();
 	}
 	
 	public void setResolution(int x, int y) {

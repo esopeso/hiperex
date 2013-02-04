@@ -1,4 +1,4 @@
-package fi.muni.redhat.hiperex.util;
+package fi.muni.redhat.hiperex.util.old;
 
 import java.util.HashMap;
 
@@ -13,5 +13,5 @@ public interface Repeatable {
 	 * @return elapsed time
 	 * @throws EmptyIdPoolException 
 	 */
-	public HashMap<String,Long> execute();
+	public long execute();
 }

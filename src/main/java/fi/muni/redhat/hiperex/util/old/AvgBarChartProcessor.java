@@ -1,4 +1,4 @@
-package fi.muni.redhat.hiperex.util;
+package fi.muni.redhat.hiperex.util.old;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +16,6 @@ import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public class AvgBarChartProcessor {
-	
-	private int xResolution = 800;
-	private int yResolution = 600;
 	
 	private static Logger log = Logger.getLogger(AvgBarChartProcessor.class);
 	private DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
@@ -41,10 +38,5 @@ public class AvgBarChartProcessor {
 		ChartUtilities.saveChartAsJPEG(new File(fileName), chart, 800, 600);
 		log.info("Chart "+fileName+" created.");
 		dataSet.clear(); // clean dataSet for next usage
-	}
-	
-	public void setResolution(int x, int y) {
-		this.xResolution = x;
-		this.yResolution = y;
 	}
 }
